@@ -1,0 +1,29 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+.container {
+  height: 350px;
+  width: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border: 2px solid red;
+}
+
+.customise-container {
+    border: 2px solid blue;
+}
+
+.page-container {
+    padding-top: 40px;
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+}
+
+div {
+  background-color: white;
+}
