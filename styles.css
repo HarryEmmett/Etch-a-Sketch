@@ -2,6 +2,7 @@ html,
 body {
   margin: 0;
   height: 100%;
+  background-color: lightgray;
 }
 
 .container {
@@ -14,16 +15,33 @@ body {
 }
 
 .customise-container {
-    border: 2px solid blue;
+  border: 2px solid blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.etch-container {
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  flex: 1;
+  justify-content: space-evenly;
 }
 
 .page-container {
-    padding-top: 40px;
-    display: flex;
-    flex: 1;
-    justify-content: space-evenly;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-div {
-  background-color: white;
+.container-header-footer {
+  border: 2px solid darkgray;
+  width: 65%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
 }
