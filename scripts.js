@@ -1,11 +1,13 @@
-const GRIDSIZE = 16;
+const DEFAULT_GRIDSIZE = 16;
 let active = false;
-let activeColor = "black";
+let activeColour = "black";
+let rainbowColour = false;
 
 const div = document.querySelector(".container");
 const colourPicker = document.querySelector(".colour-picker");
 const resetButton = document.querySelector(".reset-button");
-const gridSize = document.querySelector(".grid-size");
+const gridScroll = document.querySelector(".grid-range-scroll");
+const rainbowMode = document.querySelector(".rainbow-button");
 
 const createGrid = (num) => {
   for (let i = 0; i < num; i++) {
@@ -21,32 +23,57 @@ const createGrid = (num) => {
   }
 };
 
-createGrid(GRIDSIZE);
+createGrid(DEFAULT_GRIDSIZE);
 
-const squares = document.querySelectorAll(".square");
+const gridRangeIndicator = document.querySelector(".grid-range-indicator");
+const newGridButton = document.querySelector(".grid-button");
 
-// gridSize.addEventListener("click", (e) => {
-//   console.log(e.target.value);
-// }); 
+gridScroll.addEventListener("click", (e) => {
+  gridRangeIndicator.innerText = e.target.value;
+});
+
+newGridButton.addEventListener("click", (e) => {
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+  createGrid(parseInt(gridRangeIndicator.innerText));
+  active = false;
+  rainbowColour = false;
+});
 
 colourPicker.addEventListener("input", (e) => {
-    activeColor = e.target.value;
+  activeColour = e.target.value;
+  rainbowColour = false;
 });
 
 resetButton.addEventListener("click", (e) => {
+  const squares = document.querySelectorAll(".square");
   squares.forEach((sq) => {
-    sq.style.backgroundColor = "white";
-  })
-})
+    sq.style.backgroundColor = "lightgray";
+  });
+  active = false;
+  rainbowColour = false;
+  activeColour = "black";
+});
+
+rainbowMode.addEventListener("click", (e) => {
+  rainbowColour = true;
+});
 
 div.addEventListener("click", (e) => {
   active = !active;
-
+  const squares = document.querySelectorAll(".square");
   squares.forEach((sq) => {
     sq.addEventListener("mouseover", (e) => {
-      if(active) {
-        e.target.style.backgroundColor = activeColor;
+      if (active) {
+        if (rainbowColour) {
+          const colour = ["red", "pink", "purple", "cyan", "magenta"];
+          e.target.style.backgroundColor =
+            colour[Math.floor(Math.random() * (5 - 0))];
+        } else {
+          e.target.style.backgroundColor = activeColour;
+        }
       }
-    })
-  })
+    });
+  });
 });
