@@ -1,14 +1,17 @@
 const DEFAULT_GRIDSIZE = 16;
+
 let active = false;
 let activeColour = "black";
-let rainbowColour = false;
-let newGrid;
+let rainbowColourMode = false;
+let newGridSize;
 
-const div = document.querySelector(".squares-container");
+const canvas = document.querySelector(".squares-container");
 const colourPicker = document.querySelector(".colour-picker");
 const resetButton = document.querySelector(".reset-button");
 const gridScroll = document.querySelector(".grid-range-scroll");
-const rainbowMode = document.querySelector(".rainbow-button");
+const rainbowModeButton = document.querySelector(".rainbow-button");
+const newGridButton = document.querySelector(".grid-button");
+const rangeScrollBar = document.querySelector(".grid-range-scroll");
 
 const createGrid = (num) => {
   for (let i = 0; i < num; i++) {
@@ -20,28 +23,28 @@ const createGrid = (num) => {
       square.style.width = `${350 / num}px`;
       row.appendChild(square);
     }
-    div.appendChild(row);
+    canvas.appendChild(row);
   }
 };
 
-const newGridButton = document.querySelector(".grid-button");
-const rangeScrollBar = document.querySelector(".grid-range-scroll");
 gridScroll.addEventListener("click", (e) => {
-  newGrid = e.target.value;
+  newGridSize = e.target.value;
   newGridButton.innerText = `Create ${e.target.value}x${e.target.value}`;
 });
 
 newGridButton.addEventListener("click", (e) => {
-  while (div.firstChild) {
-    div.removeChild(div.firstChild);
-  }
-  createGrid(parseInt(newGrid));
+  canvas.innerHTML = "";
+  createGrid(parseInt(newGridSize));
   active = false;
 });
 
 colourPicker.addEventListener("input", (e) => {
+  if (rainbowColourMode) {
+    rainbowModeButton.style.backgroundColor = "lightgray";
+    rainbowModeButton.style.color = "black";
+  }
   activeColour = e.target.value;
-  rainbowColour = false;
+  rainbowColourMode = false;
 });
 
 resetButton.addEventListener("click", (e) => {
@@ -49,16 +52,16 @@ resetButton.addEventListener("click", (e) => {
   squares.forEach((sq) => {
     sq.style.backgroundColor = "white";
   });
-  newGrid = undefined;
+  newGridSize = undefined;
   active = false;
   rangeScrollBar.value = 16;
   newGridButton.innerText = `New Grid`;
 });
 
-rainbowMode.addEventListener("click", (e) => {
-  rainbowColour = !rainbowColour;
-
-  if (rainbowColour) {
+rainbowModeButton.addEventListener("click", (e) => {
+  rainbowColourMode = !rainbowColourMode;
+  
+  if (rainbowColourMode) {
     e.target.style.backgroundColor = "black";
     e.target.style.color = "white";
   } else {
@@ -67,16 +70,16 @@ rainbowMode.addEventListener("click", (e) => {
   }
 });
 
-div.addEventListener("click", (e) => {
+canvas.addEventListener("click", (e) => {
   active = !active;
   const squares = document.querySelectorAll(".square");
   squares.forEach((sq) => {
     sq.addEventListener("mouseover", (e) => {
       if (active) {
-        if (rainbowColour) {
+        if (rainbowColourMode) {
           const colour = ["red", "pink", "purple", "cyan", "magenta"];
           e.target.style.backgroundColor =
-            colour[Math.floor(Math.random() * (5 - 0))];
+            colour[Math.floor(Math.random() * 5)];
         } else {
           e.target.style.backgroundColor = activeColour;
         }

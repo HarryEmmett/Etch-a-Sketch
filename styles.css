@@ -9,7 +9,6 @@ body {
   height: 350px;
   width: 350px;
   display: flex;
-  flex-wrap: wrap;
   background-color: white;
   -webkit-box-shadow: 0 0 10px 4px darkgray;
   -moz-box-shadow: 0 0 10px 4px darkgray;
