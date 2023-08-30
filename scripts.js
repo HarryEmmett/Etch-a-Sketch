@@ -2,8 +2,9 @@ const DEFAULT_GRIDSIZE = 16;
 let active = false;
 let activeColour = "black";
 let rainbowColour = false;
+let newGrid;
 
-const div = document.querySelector(".container");
+const div = document.querySelector(".squares-container");
 const colourPicker = document.querySelector(".colour-picker");
 const resetButton = document.querySelector(".reset-button");
 const gridScroll = document.querySelector(".grid-range-scroll");
@@ -23,22 +24,19 @@ const createGrid = (num) => {
   }
 };
 
-createGrid(DEFAULT_GRIDSIZE);
-
-const gridRangeIndicator = document.querySelector(".grid-range-indicator");
 const newGridButton = document.querySelector(".grid-button");
-
+const rangeScrollBar = document.querySelector(".grid-range-scroll");
 gridScroll.addEventListener("click", (e) => {
-  gridRangeIndicator.innerText = e.target.value;
+  newGrid = e.target.value;
+  newGridButton.innerText = `Create ${e.target.value}x${e.target.value}`;
 });
 
 newGridButton.addEventListener("click", (e) => {
   while (div.firstChild) {
     div.removeChild(div.firstChild);
   }
-  createGrid(parseInt(gridRangeIndicator.innerText));
+  createGrid(parseInt(newGrid));
   active = false;
-  rainbowColour = false;
 });
 
 colourPicker.addEventListener("input", (e) => {
@@ -49,15 +47,24 @@ colourPicker.addEventListener("input", (e) => {
 resetButton.addEventListener("click", (e) => {
   const squares = document.querySelectorAll(".square");
   squares.forEach((sq) => {
-    sq.style.backgroundColor = "lightgray";
+    sq.style.backgroundColor = "white";
   });
+  newGrid = undefined;
   active = false;
-  rainbowColour = false;
-  activeColour = "black";
+  rangeScrollBar.value = 16;
+  newGridButton.innerText = `New Grid`;
 });
 
 rainbowMode.addEventListener("click", (e) => {
-  rainbowColour = true;
+  rainbowColour = !rainbowColour;
+
+  if (rainbowColour) {
+    e.target.style.backgroundColor = "black";
+    e.target.style.color = "white";
+  } else {
+    e.target.style.backgroundColor = "lightgray";
+    e.target.style.color = "black";
+  }
 });
 
 div.addEventListener("click", (e) => {
@@ -77,3 +84,7 @@ div.addEventListener("click", (e) => {
     });
   });
 });
+
+window.onload = () => {
+  createGrid(DEFAULT_GRIDSIZE);
+};

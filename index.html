@@ -8,19 +8,20 @@
   </head>
   <body>
     <div class="page-container">
-      <div class="container-header-footer">Etch-A-Sketch</div>
-      <div class="etch-container">
-        <div class="container"></div>
-        <div class="customise-container">
-          <input type="color" class="colour-picker" />
-          <button class="rainbow-button">Rainbow</button>
-          <button class="reset-button">reset</button>
-        </div>
+      <div class="container-header">
+        <h1>Etch-A-Sketch</h1>
       </div>
-      <div class="container-header-footer">
-        <input type="range" class="grid-range-scroll" value="16"/>
-        <p class="grid-range-indicator">16</p>
-        <button class="grid-button">grid</button>
+      <div class="etch-container">
+        <div class="squares-container"></div>
+      </div>
+      <div class="container-footer">
+        <input type="color" class="colour-picker" />
+        <button class="rainbow-button">Rainbow</button>
+        <button class="reset-button">Reset</button>
+        <div class="range-container">
+          <input type="range" class="grid-range-scroll" value="16" />
+          <button class="grid-button">New Grid</button>
+        </div>
       </div>
     </div>
     <script src="scripts.js"></script>
